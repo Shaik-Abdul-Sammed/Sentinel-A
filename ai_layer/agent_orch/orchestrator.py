@@ -6,7 +6,7 @@ class AgentOrchestrator:
         # In a real environment, this would initialize the Google Generative AI client
         self.api_key = os.getenv("GOOGLE_API_KEY", "MOCK_KEY_FOR_PROTOTYPE")
 
-    async def get_mitigation_suggestions(self, threat_type: str, threat_data: Dict[str, Any]) -> List[Dict[str, str]]:
+    async def get_mitigation_suggestions(self, threat_type: str, threat_data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Uses LLM context to suggest defensive actions.
         For the prototype, we provide logic-based suggestions that simulate AI reasoning.

@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import { AlertCircle, Clock, ShieldInfo } from 'lucide-react'
+import { AlertCircle, Clock, Shield } from 'lucide-react'
 
 const mockAlerts = [
   { id: 1, title: 'Unauthorized Login Attempt', node: 'Edge-Server-01', time: '2 mins ago', level: 'HIGH' },
@@ -27,7 +27,7 @@ export default function AlertsPage() {
               <div>
                 <h3 className="font-bold">{alert.title}</h3>
                 <div className="flex gap-4 mt-1 text-xs text-foreground/40">
-                  <span className="flex items-center gap-1"><ShieldInfo className="w-3 h-3" /> {alert.node}</span>
+                  <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> {alert.node}</span>
                   <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {alert.time}</span>
                 </div>
               </div>
