@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 
-const inter = Inter({ subsets: ["latin"] });
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-ui",
+  display: "swap",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "600"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Sentinel-A | Cyber Shield",
@@ -17,7 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} cyber-grid min-h-screen`}>
+      <body className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} cyber-grid min-h-screen`}>
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         <DashboardShell>
           {children}
         </DashboardShell>

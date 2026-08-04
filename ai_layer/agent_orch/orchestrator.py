@@ -38,6 +38,53 @@ class AgentOrchestrator:
             "reasoning": f"Based on {threat_type} analysis and organization security policy."
         }
 
+    def get_risk_level(self, score: int) -> str:
+        if score >= 85:
+            return "CRITICAL"
+        if score >= 65:
+            return "HIGH"
+        if score >= 40:
+            return "MEDIUM"
+        return "LOW"
+
+    async def decide_response(self, threat_type: str, score: int, evidence: Dict[str, Any]) -> Dict[str, Any]:
+        """Policy-first response engine for auto-response and escalation."""
+        risk_level = self.get_risk_level(score)
+
+        if score >= 85:
+            decision = "BLOCK"
+            actions = [
+                "Block source IP/domain",
+                "Disable impacted account session",
+                "Escalate to SOC L2",
+            ]
+        elif score >= 65:
+            decision = "ESCALATE"
+            actions = [
+                "Force MFA challenge",
+                "Notify SOC analyst",
+                "Increase monitoring window",
+            ]
+        elif score >= 40:
+            decision = "ALERT"
+            actions = [
+                "Create alert ticket",
+                "Monitor for repeated behavior",
+            ]
+        else:
+            decision = "ALLOW"
+            actions = ["Log event as informational"]
+
+        title = f"{threat_type.replace('_', ' ').title()} - {risk_level}"
+        return {
+            "title": title,
+            "risk_level": risk_level,
+            "score": score,
+            "decision": decision,
+            "actions": actions,
+            "evidence": evidence,
+        }
+
     async def generate_threat_report(self, threat_summary: str) -> str:
         # Placeholder for Gemini generating a human-readable report
         return f"AI Generated Report: Sentinel-A has detected a potential {threat_summary}. No data exfiltration detected yet."

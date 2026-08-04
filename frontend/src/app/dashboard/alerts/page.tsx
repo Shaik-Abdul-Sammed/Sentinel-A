@@ -1,15 +1,24 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AlertCircle, Clock, Shield } from 'lucide-react'
-
-const mockAlerts = [
-  { id: 1, title: 'Unauthorized Login Attempt', node: 'Edge-Server-01', time: '2 mins ago', level: 'HIGH' },
-  { id: 2, title: 'Suspicious File Transfer', node: 'Workstation-42', time: '15 mins ago', level: 'MEDIUM' },
-  { id: 3, title: 'Database Query Anomaly', node: 'SQL-Primary', time: '1 hour ago', level: 'LOW' },
-]
+import { getAlerts, subscribeTelemetry, type AlertItem } from '@/lib/api'
 
 export default function AlertsPage() {
+  const [alerts, setAlerts] = useState<AlertItem[]>([])
+
+  useEffect(() => {
+    const load = async () => {
+      const data = await getAlerts(30)
+      setAlerts(data)
+    }
+    load().catch(console.error)
+    const unsubscribe = subscribeTelemetry(() => {
+      load().catch(console.error)
+    })
+    return () => unsubscribe()
+  }, [])
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div>
@@ -18,25 +27,28 @@ export default function AlertsPage() {
       </div>
 
       <div className="space-y-4">
-        {mockAlerts.map((alert) => (
-          <div key={alert.id} className="glass p-6 flex items-center justify-between group hover:border-accent/30 transition-all">
+        {alerts.map((alert) => (
+          <div key={alert.alert_id} className="glass p-6 flex items-center justify-between group hover:border-accent/30 transition-all">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-white/5 rounded-xl">
-                <AlertCircle className={`w-6 h-6 ${alert.level === 'HIGH' ? 'text-red-500' : 'text-yellow-500'}`} />
+                <AlertCircle className={`w-6 h-6 ${alert.risk_level === 'CRITICAL' || alert.risk_level === 'HIGH' ? 'text-red-500' : 'text-yellow-500'}`} />
               </div>
               <div>
                 <h3 className="font-bold">{alert.title}</h3>
                 <div className="flex gap-4 mt-1 text-xs text-foreground/40">
-                  <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> {alert.node}</span>
-                  <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {alert.time}</span>
+                  <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> {alert.source} | {alert.actor_id}</span>
+                  <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {new Date(alert.created_at).toLocaleTimeString()}</span>
                 </div>
               </div>
             </div>
-            <button className="px-4 py-2 text-xs font-bold border border-accent/20 rounded-lg group-hover:bg-accent group-hover:text-primary transition-all">
-              REVIEW THREAD
-            </button>
+            <div className="px-4 py-2 text-xs font-bold border border-accent/20 rounded-lg">
+              {alert.decision} ({alert.risk_score})
+            </div>
           </div>
         ))}
+        {alerts.length === 0 && (
+          <div className="glass p-6 text-sm text-foreground/50">No alerts yet. Run a simulation from the dashboard overview.</div>
+        )}
       </div>
     </div>
   )
