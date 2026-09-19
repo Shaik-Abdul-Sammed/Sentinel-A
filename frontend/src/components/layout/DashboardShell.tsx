@@ -11,11 +11,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const isPublicPage = pathname === "/" || pathname === "/login";
-  const [ready, setReady] = useState(isPublicPage);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (isPublicPage) {
-      setReady(true);
       return;
     }
 
@@ -25,16 +24,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    setReady(true);
+    const timer = setTimeout(() => {
+      setReady(true);
+    }, 0);
+    return () => clearTimeout(timer);
   }, [isPublicPage, pathname, router]);
-
-  if (!ready) {
-    return (
-      <main id="main-content" className="flex min-h-screen w-full items-center justify-center text-sm text-foreground/50" role="main" aria-busy="true" aria-live="polite">
-        Preparing secure session...
-      </main>
-    );
-  }
 
   if (isPublicPage) {
     return (
@@ -44,6 +38,14 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </div>
         <main id="main-content" className="min-h-screen w-full" role="main">{children}</main>
       </div>
+    );
+  }
+
+  if (!ready) {
+    return (
+      <main id="main-content" className="flex min-h-screen w-full items-center justify-center text-sm text-foreground/50" role="main" aria-busy="true" aria-live="polite">
+        Preparing secure session...
+      </main>
     );
   }
 

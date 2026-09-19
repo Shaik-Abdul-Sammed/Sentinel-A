@@ -6,10 +6,26 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { analyzeURL } from '@/lib/api'
 import { cn } from '@/lib/utils'
 
+interface ScanAction {
+  action: string
+  description: string
+}
+
+interface ScanResult {
+  analysis: {
+    final_verdict: string
+    confidence: number
+    ai_reasoning: string
+  }
+  recommendations: {
+    actions: ScanAction[]
+  }
+}
+
 export default function ScanPage() {
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState<any>(null)
+  const [result, setResult] = useState<ScanResult | null>(null)
 
   const handleScan = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -111,7 +127,7 @@ export default function ScanPage() {
                     Agent Reasoning
                   </p>
                   <p className="text-sm text-foreground/70 leading-relaxed italic">
-                    "{result.analysis.ai_reasoning}"
+                    &ldquo;{result.analysis.ai_reasoning}&rdquo;
                   </p>
                 </div>
               </div>
@@ -120,7 +136,7 @@ export default function ScanPage() {
             <div className="glass p-8">
               <h3 className="text-sm font-bold text-accent mb-6">SUGGESTED ACTIONS</h3>
               <div className="space-y-4">
-                {result.recommendations.actions.map((act: any, i: number) => (
+                {result.recommendations.actions.map((act: ScanAction, i: number) => (
                   <div key={i} className="group cursor-pointer">
                     <p className="text-sm font-bold group-hover:text-accent transition-colors">{act.action}</p>
                     <p className="text-xs text-foreground/40 mt-1">{act.description}</p>

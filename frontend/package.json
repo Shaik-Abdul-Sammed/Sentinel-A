@@ -6,9 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "cap:sync": "cap sync",
+    "cap:build": "next build && cap sync",
+    "cap:add:android": "cap add android",
+    "cap:open:android": "cap open android"
   },
   "dependencies": {
+    "@capacitor/android": "^7.0.1",
+    "@capacitor/cli": "^7.0.1",
+    "@capacitor/core": "^7.0.1",
     "axios": "^1.13.6",
     "clsx": "^2.1.1",
     "framer-motion": "^12.35.2",

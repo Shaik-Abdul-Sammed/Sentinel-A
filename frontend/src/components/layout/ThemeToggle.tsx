@@ -33,9 +33,12 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
 
   useEffect(() => {
     const preferredTheme = getPreferredTheme()
-    setTheme(preferredTheme)
     applyTheme(preferredTheme)
-    setMounted(true)
+    const timer = setTimeout(() => {
+      setTheme(preferredTheme)
+      setMounted(true)
+    }, 0)
+    return () => clearTimeout(timer)
   }, [])
 
   const toggleTheme = () => {

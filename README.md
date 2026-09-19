@@ -1,231 +1,346 @@
 # Sentinel-AI: India’s AI Agent Cyber Shield
 
-Built for National Innovation Hackathon 2026.
+> **Built for National Innovation Hackathon 2026**  
+> *An autonomous, agentic cyber-defense platform delivering real-time threat intelligence, behavioral anomaly detection, and automated mitigation across web and mobile endpoints.*
 
-## 🛡️ Overview
-Sentinel-A is an autonomous cyber-defense platform designed to detect and mitigate modern threats using AI agents.
+---
 
-## 🚀 Key Features
-- **AI Phishing Detector**: Heuristic + LLM (Gemini) analysis for deep text inspection.
-- **Insider Risk Engine**: Behavioral analytics using Scikit-Learn to catch anomalies.
-- **Autonomous Agents**: Self-orchestrating agents that suggest and execute mitigation steps.
-- **Cyber-Themed UI**: Modern dashboard with real-time threat maps and glassmorphism.
+## 🛡️ About the Project
 
-## 🆕 Advanced Unique Features (New)
+### The Challenge
+Modern organizations, universities, and citizen-facing digital services face an escalating onslaught of sophisticated cyber threats—from credential harvesting and spear-phishing campaigns to insider privilege abuse and impossible geo-velocity logins. Traditional Security Information and Event Management (SIEM) systems and manual Security Operations Centers (SOCs) are overwhelmed by:
+- **Alert Fatigue**: Thousands of unranked notifications per day.
+- **Critical Latency**: Mean time to respond (MTTR) often stretches from hours to days.
+- **Static Rule Fragility**: Signature-based IDS/IPS fail against novel attack vectors and polymorphic phishing.
+- **Complex Deployment & High Cost**: Enterprise tools require extensive dedicated infrastructure and licensing.
 
-Sentinel-A now includes an additional advanced feature pack under `/advanced` with unique capabilities beyond the core phishing + anomaly pipeline:
+### The Sentinel-A Solution
+**Sentinel-A** is an autonomous, agent-orchestrated cyber shield engineered to detect, classify, and mitigate cyber attacks in sub-second timeframes. By integrating lightweight machine learning (Isolation Forests), heuristic and generative LLM reasoning (Google Gemini), and active push telemetry middleware, Sentinel-A turns passive logging into immediate, autonomous defense.
 
-1. **Threat Intel Blocklist Add**: Register malicious domains/IP indicators.
-2. **Threat Intel Blocklist Lookup**: Check indicator reputation quickly.
-3. **Threat Intel Blocklist Remove**: De-list indicators safely.
-4. **Impossible Travel Detection**: Detect geo-velocity login anomalies.
-5. **Device Trust Drift Check**: Compare known vs current fingerprint and score trust.
-6. **Honeypot Tripwire Detection**: Trigger critical alerts on decoy endpoint access.
-7. **Decoy Credential Abuse Detection**: Catch canary credential usage attempts.
-8. **Adaptive Throttle Recommendation**: Dynamic rate-limit policy from pressure score.
-9. **IOC Extraction Engine**: Extract IPs, domains, URLs, hashes, and emails from text.
-10. **Campaign Correlation Engine**: Cluster incidents into campaigns by behavior signature.
-11. **Forensic Evidence Bundle Export**: Export signed incident package with SHA256 digest.
-12. **Automated Incident Playbook Generator**: Build SOC response steps from threat + severity.
+### Key Architectural Pillars
+1. **Push-Ingestion Telemetry Pipeline**: Intercepts authentications and endpoint requests via middleware, streaming real-time event logs into the AI engine.
+2. **Dual-Layer Detection Engine**:
+   - *Heuristic + LLM Phishing Scanner*: Evaluates structural indicators, entropy, punycode, brand imitation, and contextual language patterns.
+   - *Behavioral Insider Risk Engine*: Unsupervised Isolation Forest model detecting anomalies in user volume, anomalous login hours, and egress bursts.
+3. **Advanced Threat Intelligence Pack**:
+   - Indicator of Compromise (IOC) blocklist management and regex extraction.
+   - Geo-velocity "Impossible Travel" physics detection.
+   - Hardware / User-Agent device trust drift verification.
+   - Honeypot decoy endpoints and tripwire credential abuse alarms.
+   - Adaptive traffic throttling recommendations.
+   - Forensic evidence bundle generation with cryptographic SHA-256 signatures.
+   - Automated SOC incident response playbook generator.
+4. **Autonomous Policy Orchestrator**: Automatically evaluates aggregate threat severity and executes graduated responses: `ALLOW`, `ALERT`, `ESCALATE`, or `BLOCK`.
+5. **Cross-Platform Glassmorphic SOC Console**: Available as both a modern web app and a native mobile application bundled via **Capacitor**.
 
-## 🛠️ Tech Stack
-- **Frontend**: Next.js 15, Tailwind CSS, Framer Motion, Lucide React.
-- **Backend**: FastAPI, Python 3.11, JWT Security.
-- **AI/ML**: Scikit-Learn (Isolation Forest), Google Gemini API (Placeholder).
-- **Deployment**: Docker, Docker Compose.
+---
 
-## 📦 Getting Started
+## ⚖️ Comparison with Existing Solutions
 
-### 1. Prerequisites
-- Docker & Docker Compose
-- Google Gemini API Key (Optional)
+| Feature / Capability | Traditional SIEM (e.g. Splunk, QRadar) | Enterprise EDR/XDR (e.g. CrowdStrike, SentinelOne) | Traditional IDS/IPS (e.g. Snort, Suricata) | Darktrace (NDR) | **Sentinel-A (Cyber Shield)** |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Autonomous Action Decision** | ❌ Mostly alerting; requires SOAR scripting | ⚠️ Endpoint-only containment; high configuration | ❌ Dropping rule matches only; no contextual logic | ⚠️ Autonomous network throttles | **✅ Native Agent Policy Engine (`ALLOW` / `ALERT` / `ESCALATE` / `BLOCK`)** |
+| **Detection Approach** | Static rules & log correlation queries | Endpoint agent process hooks | Signature string/packet matching | Unsupervised network anomaly math | **Dual AI: Heuristics + Scikit-Learn Isolation Forest + LLM Reasoning** |
+| **Phishing / Text Inspection** | ❌ External plugin required | ❌ Limited email/text inspection | ❌ Packet matching only | ❌ Metadata-focused | **✅ Built-in Deep Text/URL Heuristic & Generative AI Inspection** |
+| **Insider Anomaly Detection** | ⚠️ Expensive UEBA add-ons | ⚠️ Focuses on malware binaries | ❌ Ineffective against valid credentials | ⚠️ Network-level only | **✅ Behavioral Anomaly Profiling (Action Count, Hour, Data Volume)** |
+| **Push Telemetry Middleware** | ❌ Pull/Syslog collector forwarders | ❌ Heavy kernel/system agent | ❌ TAP / SPAN port sniffing | ❌ SPAN port monitoring | **✅ Lightweight Ingestion Middleware (`/auth/live-login` hooks)** |
+| **Cross-Platform & Mobile App** | ⚠️ Desktop web consoles | ⚠️ Desktop management console | ❌ CLI / third-party GUI | ⚠️ Web portal | **✅ Responsive Web + Native Mobile App via Capacitor** |
+| **Forensic Evidence Bundles** | Manual log exports | Proprietary agent telemetry | PCAP capture dumps | Proprietary packet logs | **✅ Cryptographic JSON Bundle with SHA-256 Digest Verification** |
+| **Incident Playbook Generation**| Manual runbooks or expensive SOAR | Manual playbooks | ❌ None | ❌ None | **✅ Instant Automated Step-by-Step Playbook Generator** |
+| **Resource Footprint** | Extremely heavy (Gigabytes of RAM) | Medium to heavy kernel footprint | Medium | Dedicated hardware appliances | **✅ Ultra-lightweight: Python FastAPI + Next.js + SQLite/Postgres** |
 
-### 2. Run with Docker
+---
+
+## 🗂️ Project Structure
+
+```text
+Sentinel-A/
+├── .gitignore                      # Git ignore rules for Python, Node, and database files
+├── docker-compose.yml              # Multi-container orchestration (FastAPI + Next.js + DB)
+├── pytest.ini                      # Pytest runner configuration
+├── README.md                       # Comprehensive platform documentation
+│
+├── ai_layer/                       # Core AI/ML Detection and Autonomous Orchestration
+│   ├── __init__.py
+│   ├── anomaly_detection/          # Behavioral insider threat & anomaly profiling
+│   │   ├── __init__.py
+│   │   └── detector.py             # Scikit-Learn Isolation Forest implementation
+│   ├── orchestrator/               # Autonomous agent decision and mitigation engine
+│   │   ├── __init__.py
+│   │   └── policy_agent.py         # Multi-tier risk scoring and response policy
+│   └── phishing_detection/         # Deep text and URL phishing inspection
+│       ├── __init__.py
+│       └── detector.py             # Heuristics (entropy, keywords) + Google Gemini API
+│
+├── backend/                        # High-Performance FastAPI Backend Service
+│   ├── alembic.ini                 # Database migration configuration
+│   ├── requirements.txt            # Python dependencies (FastAPI, SQLAlchemy, Scikit-Learn)
+│   ├── main.py                     # Application entrypoint & middleware initialization
+│   ├── alembic/                    # Database schema versions and migrations
+│   │   ├── env.py
+│   │   └── versions/
+│   │       ├── 20260417_0001_create_telemetry_events_table.py
+│   │       └── 20260417_0002_create_roles_and_users_tables.py
+│   └── app/
+│       ├── api/                    # Route controllers
+│       │   ├── advanced.py         # Advanced security suite endpoints (IOC, Geo, Tripwire)
+│       │   ├── auth.py             # JWT authentication, role verification, live-login
+│       │   ├── telemetry.py        # Log ingestion, alert resolution, simulation endpoints
+│       │   └── threats.py          # Threat scanning and evaluation APIs
+│       ├── core/                   # Infrastructure utilities & middlewares
+│       │   ├── advanced_security.py# Security algorithms (Geo-velocity, IOC regex, bundles)
+│       │   ├── config.py           # Environment settings & credentials
+│       │   ├── database.py         # SQLAlchemy engine and session makers
+│       │   ├── security.py         # Password hashing & JWT token issuance
+│       │   ├── telemetry_push_middleware.py # Push-ingestion middleware for auth traffic
+│       │   └── ws_manager.py       # WebSocket connection manager for live dashboard feeds
+│       └── models/                 # SQLAlchemy database schema models
+│           ├── telemetry_event.py  # Events, alerts, and timeline database records
+│           └── user.py             # User and role identity models
+│
+├── frontend/                       # Cross-Platform Web & Mobile Dashboard
+│   ├── capacitor.config.ts         # Capacitor TypeScript app configuration
+│   ├── capacitor.config.json       # Capacitor fallback JSON configuration
+│   ├── next.config.ts              # Next.js configuration (Static HTML Export enabled)
+│   ├── package.json                # Dependencies (@capacitor/core, React 19, Lucide, Tailwind)
+│   ├── postcss.config.mjs          # PostCSS plugins
+│   ├── tsconfig.json               # TypeScript compiler options
+│   ├── public/                     # Static icons, favicons, and graphic assets
+│   └── src/
+│       ├── app/                    # Next.js App Router
+│       │   ├── globals.css         # Cyber-defense dark/light styling and variables
+│       │   ├── layout.tsx          # Root layout with offline-ready typography
+│       │   ├── page.tsx            # Landing showcase & system readiness portal
+│       │   ├── login/              # Secure SOC / Admin authentication portal
+│       │   │   └── page.tsx
+│       │   └── dashboard/          # SOC Operations Center
+│       │       ├── page.tsx        # Overview: metrics, attack radar, live telemetry stream
+│       │       ├── alerts/         # Alert triage & incident management
+│       │       ├── forensics/      # Deep forensic log inspection & analysis
+│       │       ├── scan/           # Interactive AI Threat Scanner
+│       │       └── settings/       # Cyber shield parameters & Capacitor gateway config
+│       ├── components/             # Reusable UI widgets
+│       │   ├── dashboard/          # Header, Sidebar, StatCards, ThreatCharts
+│       │   └── layout/             # DashboardShell (session guard), ThemeToggle
+│       └── lib/                    # Client libraries
+│           ├── api.ts              # Axios HTTP client, dynamic gateway base URL, WebSockets
+│           └── utils.ts            # Formatting and Tailwind utility helpers
+│
+├── infrastructure/                 # Container and deployment specifications
+│   ├── Dockerfile.backend          # Multi-stage Python 3.11 backend image
+│   └── Dockerfile.frontend         # Node.js 20 production runner image
+│
+├── scripts/                        # Automation & Demonstration Utilities
+│   └── simulate_threats.py         # Synthetic threat injection & demo scenario script
+│
+└── tests/                          # Automated Verification Suite (32 tests)
+    ├── conftest.py                 # Pytest fixtures and mock databases
+    ├── integration/                # End-to-end API and migration tests
+    │   ├── test_advanced_api.py
+    │   ├── test_alembic_smoke.py
+    │   ├── test_api.py
+    │   └── test_websocket_auth.py
+    └── unit/                       # Component-level tests
+        ├── test_advanced_security.py
+        ├── test_auth_roles.py
+        ├── test_security.py
+        └── test_telemetry_engine.py
+```
+
+---
+
+## 💻 Tech Stack
+
+### 1. Frontend & Cross-Platform Mobile
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router, Turbopack, Client Static Export)
+- **UI Library**: [React 19](https://react.dev/)
+- **Mobile Container**: [Capacitor 7](https://capacitorjs.com/) (Transforms Next.js static export into native Android & iOS apps)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) with custom cyber-theme glassmorphism
+- **Motion & Icons**: [Framer Motion](https://www.framer.com/motion/) & [Lucide React](https://lucide.dev/)
+- **Network / State**: [Axios](https://axios-http.com/) & Native WebSockets for real-time telemetry streaming
+
+### 2. Backend & API Services
+- **Web Framework**: [FastAPI](https://fastapi.tiangolo.com/) (High-performance asynchronous Python API)
+- **Server**: [Uvicorn](https://www.uvicorn.org/) (ASGI server)
+- **Data Validation**: [Pydantic v2](https://docs.pydantic.dev/) & Pydantic-Settings
+- **Middleware**: Custom `TelemetryPushMiddleware` for zero-latency event interception
+
+### 3. Artificial Intelligence & Machine Learning
+- **Behavioral Analytics**: [Scikit-Learn](https://scikit-learn.org/) (Unsupervised `IsolationForest` for anomaly scoring)
+- **Generative AI Reasoning**: [Google Gemini API](https://ai.google.dev/) (`google-generativeai`) for natural-language contextual attack analysis
+- **Heuristic Text Engine**: High-speed entropy scoring, domain levelling, and punycode detection
+
+### 4. Database & Identity Management
+- **ORM**: [SQLAlchemy 2.0](https://www.sqlalchemy.org/) (Async-compatible session architecture)
+- **Migrations**: [Alembic](https://alembic.sqlalchemy.org/) (Version-controlled schema evolution)
+- **Storage**: SQLite (zero-config local demo) & PostgreSQL (production-ready)
+- **Security**: OAuth2 with JWT (via `python-jose` with cryptography) and Passlib (`bcrypt`)
+
+### 5. DevOps & Containerization
+- **Containers**: Docker & Docker Compose
+- **Testing**: Pytest, AnyIO, AsyncIO test runners
+
+---
+
+## 📋 System Requirements & Prerequisites
+
+### Minimum Hardware
+- **CPU**: 2 Cores (4 Cores recommended for local Docker build)
+- **RAM**: 4 GB (8 GB recommended)
+- **Disk Space**: 5 GB free disk space
+
+### Software Requirements
+- **Python**: Version `3.10` or `3.11`
+- **Node.js**: Version `20.x` or `22.x` (LTS) & `npm` 10+
+- **Docker**: Version `24.0+` & Docker Compose `v2.20+`
+- **Capacitor Mobile Build (Optional for Android)**:
+  - Android Studio Hedgehog / Iguana / Ladybug
+  - Android SDK (API Level 33+)
+  - Java Development Kit (JDK 17 or 21)
+
+### Environment Variables
+Configure a `.env` file in the root or `backend/` directory:
 ```bash
+# Backend Security
+SECRET_KEY=your-super-secret-key-32-chars-minimum
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+
+# Database
+DATABASE_URL=sqlite:///./sentinel_a.db
+# Or PostgreSQL: postgresql://sentinel_user:password@localhost:5432/sentinel_db
+
+# Optional AI Key
+GEMINI_API_KEY=AIzaSy...your-gemini-api-key
+
+# Frontend (frontend/.env.local)
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+---
+
+## 🚀 Getting Started
+
+### Method 1: Run with Docker Compose (Recommended for Demo)
+
+The fastest way to launch the entire stack:
+```bash
+# Clone the repository
+git clone https://github.com/Shaik-Abdul-Sammed/Sentinel-A.git
+cd Sentinel-A
+
+# Build and start all services
 docker-compose up --build
 ```
 
-Backend container now runs `alembic upgrade head` before API startup.
+Access the interfaces:
+- **Web App / Console**: [http://localhost:3000](http://localhost:3000)
+- **Backend API**: [http://localhost:8000](http://localhost:8000)
+- **Interactive Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-### 3. Access the Platform
-- **Frontend**: `http://localhost:3000`
-- **Backend API**: `http://localhost:8000`
-- **API Docs**: `http://localhost:8000/docs`
+---
 
-## 👥 Team Codeverses
-- **Lead**: Abdul Sammed Shaik
-- **Institution**: RGUKT RK Valley
+### Method 2: Run Locally (Development Mode)
 
-## 🌐 Real-World Integration Architecture (Hackathon-Ready)
+#### 1. Backend Setup
+```bash
+# Create and activate Python virtual environment
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-Sentinel-A can be integrated with a real login portal (citizen service, university ERP, or government form site) by adding telemetry hooks in the web app and API gateway. The website sends structured security events (login attempts, suspicious URL submissions, high-volume exports, failed auth bursts) to Sentinel-A's telemetry ingestion API. FastAPI runs the detection pipeline: phishing detector for text/URL content, anomaly detector for behavior patterns, and an orchestration policy agent that produces decisions (`ALLOW`, `ALERT`, `ESCALATE`, `BLOCK`). The frontend dashboard polls live APIs for alerts, system status, and timeline entries so you can show detection -> response -> escalation in real time.
+# Install backend dependencies
+cd backend
+pip install -r requirements.txt
 
-### Proposed Production-Like Flow
-1. User interacts with live website (`/login`, `/api/payroll/export`, `/inbox`).
-2. Website sends event logs to `POST /telemetry/logs`.
-3. Sentinel-A detection pipeline computes risk score.
-4. Orchestrator decides action and stores alert/timeline event.
-5. Dashboard reads `GET /telemetry/status`, `GET /telemetry/alerts`, `GET /telemetry/timeline`.
-6. SOC/admin sees incident and response decisions instantly.
+# Run database migrations
+alembic upgrade head
 
-## 🔌 Key API Endpoints for Demo
+# Start FastAPI development server
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
 
-### Telemetry Ingestion
-- `POST /telemetry/logs` - ingest one security event (role: `sensor` or `admin`).
-- `POST /telemetry/logs/batch` - ingest bulk events (role: `sensor` or `admin`).
-- `POST /auth/live-login` - live login endpoint monitored by push-ingestion middleware.
+#### 2. Frontend Setup
+In a new terminal window:
+```bash
+cd frontend
 
-### Detection + Orchestration
-- `POST /telemetry/phishing-scan` - direct phishing text/url scan.
-- `POST /telemetry/simulate/phishing` - safe phishing simulation (role: `soc` or `admin`).
-- `POST /telemetry/simulate/insider` - safe insider-behavior simulation (role: `soc` or `admin`).
+# Install Node dependencies
+npm install
 
-### Advanced Security Pack
-- `POST /advanced/threat-intel/blocklist/add`
-- `GET /advanced/threat-intel/blocklist`
-- `POST /advanced/threat-intel/blocklist/lookup`
-- `DELETE /advanced/threat-intel/blocklist/{indicator}`
-- `POST /advanced/geo/impossible-travel`
-- `POST /advanced/device/trust-check`
-- `POST /advanced/honeypot/tripwire`
-- `POST /advanced/identity/decoy-credential-check`
-- `POST /advanced/network/adaptive-throttle`
-- `POST /advanced/ioc/extract`
-- `POST /advanced/campaign/correlate`
-- `POST /advanced/forensics/export`
-- `POST /advanced/playbook/generate`
+# Run development server
+npm run dev
+```
 
-### Dashboard Data
-- `GET /telemetry/status` - shield status + counters + average risk.
-- `GET /telemetry/alerts?limit=25` - latest alerts with decisions (role: `soc` or `admin`).
-- `GET /telemetry/timeline?limit=50` - detection/response timeline (role: `soc` or `admin`).
-- `WS /telemetry/ws?token=<jwt>` - role-protected live push updates (role: `soc` or `admin`).
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### SOC Action API
-- `POST /telemetry/alerts/{alert_id}/resolve` - resolve alert (role: `soc` or `admin`).
+---
 
-### Demo Roles
-- `abdul / sentinela2026` -> `admin`
-- `sensor / sensor2026` -> `sensor` (telemetry ingestion)
-- `soc / soc2026` -> `soc` (SOC operations)
+### Method 3: Run as a Mobile / Web App with Capacitor
 
-## 🧠 Agent Orchestration Logic
+Sentinel-A is fully configured as a progressive cross-platform web app powered by Capacitor.
 
-Risk scoring and decisions are policy-driven:
-- Score >= 85 -> `CRITICAL` -> `BLOCK`
-- Score >= 65 -> `HIGH` -> `ESCALATE`
-- Score >= 40 -> `MEDIUM` -> `ALERT`
-- Score < 40 -> `LOW` -> `ALLOW`
+#### 1. Compile Static Web Assets
+```bash
+cd frontend
 
-Auto-response actions include source blocking, MFA enforcement, SOC escalation, and monitoring escalation.
+# Build optimized static HTML/JS export into frontend/out/
+npm run build
+```
 
-## 🧪 End-to-End Demo Scenario
+#### 2. Initialize and Sync Capacitor
+```bash
+# Add Android native project (requires Android SDK installed)
+npm run cap:add:android
 
-1. Start system with Docker.
-2. Open dashboard and alerts screens.
-3. Trigger phishing simulation.
-4. Trigger insider simulation.
-5. Show timeline updates and risk score changes.
-6. Explain action policy (why one was blocked and one escalated).
+# Sync the compiled web assets into native platform assets
+npm run cap:sync
+```
 
-### Demo Command
+#### 3. Launch on Android Emulator or Device
+```bash
+# Open native project directly in Android Studio
+npm run cap:open:android
+```
+*Note*: When running on an Android emulator or device, open **Settings** inside the Sentinel-A app and set the **Backend API URL** to `http://10.0.2.2:8000` (for Android emulator) or your host machine's local IP address (`http://192.168.x.x:8000`).
+
+---
+
+## 🧪 Threat Simulation & Testing
+
+### 1. Run Automated Threat Simulation
+While the backend and frontend are running, open a terminal and execute:
 ```bash
 python scripts/simulate_threats.py
 ```
+This triggers real telemetry injections including:
+- Phishing link submissions
+- Insider credential abuse anomalies
+- Impossible travel alerts
+- Honeypot tripwire triggers
 
-This script now triggers real telemetry API simulations and prints status + alerts snapshots.
+Observe the live dashboard counters, risk score shifts, and autonomous mitigation logs update in real time via WebSockets!
 
-## 🧩 Minimal Working Snippets
-
-### 1) Log capture from a website (frontend/service)
-```javascript
-await fetch("http://localhost:8000/telemetry/logs", {
-	method: "POST",
-	headers: { "Content-Type": "application/json" },
-	body: JSON.stringify({
-		source: "citizen-portal",
-		event_type: "AUTH",
-		actor_id: "user_109",
-		ip: "10.2.0.41",
-		endpoint: "/login",
-		status: "FAILED",
-		payload: { action_count: 18, hour_of_day: 2, data_volume_mb: 2 },
-	}),
-})
-```
-
-### 2) Anomaly detection + risk build (backend)
-```python
-features = [[action_count, hour_of_day, data_volume_mb]]
-result = anomaly_detector.predict(features)
-is_anomaly = result["details"][0]["is_anomaly"]
-score = min(100, int(confidence * 70 + (25 if is_anomaly else 0) + failed_auth_bonus))
-```
-
-### 3) Alert generation + auto-response (backend)
-```python
-decision = await orchestrator.decide_response(threat_type="INSIDER_ANOMALY", score=score, evidence=result)
-alert = {
-	"risk_level": decision["risk_level"],
-	"decision": decision["decision"],
-	"actions": decision["actions"],
-}
-```
-
-## 🔒 Safe Attack Simulation Guidance
-
-Use only synthetic data and internal localhost endpoints:
-- Simulate phishing with fake URLs/domains only.
-- Simulate insider anomaly with dummy users and fake payload sizes.
-- Never scan external production targets.
-- Keep tests isolated in local Docker network.
-
-## 🐳 Local Deployment (Demo-Ready)
-
+### 2. Run Test Suite
 ```bash
-docker-compose up --build
+# Run all 32 unit and integration tests
+.venv/bin/pytest
 ```
 
-Then open:
-- Frontend: `http://localhost:3000`
-- Backend: `http://localhost:8000`
-- API Docs: `http://localhost:8000/docs`
+---
 
-For a strong presentation, keep one terminal running `python scripts/simulate_threats.py` while the dashboard is open to show live detections and autonomous decisions.
+## 🔐 Demo Credentials & Roles
 
-## 🧱 Database Migrations (Alembic)
+| Username | Password | Role | Description |
+| :--- | :--- | :--- | :--- |
+| `abdul` | `sentinela2026` | `admin` | Full administrative control, system settings, and policy overrides |
+| `soc` | `soc2026` | `soc` | Security analyst role with alert triage, scanning, and forensics view |
+| `sensor` | `sensor2026` | `sensor` | Dedicated service account for automated telemetry log ingestion |
 
-Production-safe schema evolution is now managed with Alembic in `backend/alembic`.
+---
 
-Current revisions:
-- `20260417_0001` creates telemetry events, alerts, and timeline tables.
-- `20260417_0002` adds normalized `roles` and `users` tables for the future identity model.
+## 👥 Authors & Acknowledgments
 
-### Run migrations locally
-```bash
-cd backend
-alembic upgrade head
-```
-
-### Create a new migration
-```bash
-cd backend
-alembic revision -m "add new security fields"
-```
-
-### Roll back one migration
-```bash
-cd backend
-alembic downgrade -1
-```
-
-## 🔄 True Push Ingestion Middleware
-
-Sentinel-A includes `TelemetryPushMiddleware` that captures real login attempts on `POST /auth/live-login` and pushes them directly into the telemetry pipeline (event ingestion + websocket broadcast) in real time.
-
-Example request:
-```bash
-curl -X POST "http://localhost:8000/auth/live-login" \
-	-H "Content-Type: application/x-www-form-urlencoded" \
-	-d "username=soc&password=soc2026"
-```
+- **Lead Developer**: Abdul Sammed Shaik
+- **Institution**: Rajiv Gandhi University of Knowledge Technologies (RGUKT RK Valley)
+- **Event**: National Innovation Hackathon 2026
+- **License**: MIT

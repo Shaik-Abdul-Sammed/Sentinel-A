@@ -1,0 +1,9 @@
+{
+  "appId": "com.sentinela.app",
+  "appName": "Sentinel-A",
+  "webDir": "out",
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  }
+}

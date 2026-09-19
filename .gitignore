@@ -147,7 +147,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+/lib/
+!frontend/src/lib/
 lib64/
 parts/
 sdist/
@@ -177,3 +178,31 @@ Thumbs.db
 .gemini/
 .agents/
 brain/
+.qodo/
+
+# Testing & Cache
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+.mypy_cache/
+
+# SQLite & Test Databases
+*.sqlite
+*.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+*.db-shm
+*.db-wal
+.sentinel_test.sqlite
+
+# Capacitor & Mobile Builds
+frontend/android/
+frontend/ios/
+*.apk
+*.aab
+
+# Frontend & Next.js Builds
+frontend/.next/
+frontend/out/
+frontend/.turbo/

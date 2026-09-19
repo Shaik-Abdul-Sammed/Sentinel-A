@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 :root {
+  --font-ui: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --background: #07111f;
   --foreground: #e7f4ff;
   --muted-foreground: #9db7d4;
